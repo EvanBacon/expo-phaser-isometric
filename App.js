@@ -3,7 +3,7 @@ import AssetUtils from 'expo-asset-utils';
 import React from 'react';
 import { View } from 'react-native';
 import Assets from './Assets';
-// import Controls from './Controls';
+import Controls from './Controls';
 
 class App extends React.Component {
   state = {
@@ -51,7 +51,7 @@ class App extends React.Component {
   }
 
   get screen() {
-    return <View />;
+    return <Controls />;
   }
 
   render() {
