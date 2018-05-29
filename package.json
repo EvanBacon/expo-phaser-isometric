@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "@expo/browser-polyfill": "^0.0.0-alpha.8",
+    "easystarjs": "^0.4.3",
     "expo": "^27.0.1",
     "expo-asset-utils": "^0.0.4-alpha.2",
     "expo-multi-touch": "^0.0.0",

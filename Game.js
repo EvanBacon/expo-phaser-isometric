@@ -14,6 +14,10 @@ export default class Game {
 
   updateControls = velocity =>
     this.playable && this.playable.updateControls({ velocity });
-  onTouchesBegan = () => this.playable && this.playable.onTouchesBegan();
-  onTouchesEnded = () => this.playable && this.playable.onTouchesEnded();
+  onTouchesBegan = (x, y) =>
+    this.playable && this.playable.onTouchesBegan(x, y);
+  onTouchesMoved = (x, y) =>
+    this.playable && this.playable.onTouchesMoved(x, y);
+  onTouchesEnded = (x, y) =>
+    this.playable && this.playable.onTouchesEnded(x, y);
 }

@@ -14,7 +14,7 @@ export default class Controls extends React.Component {
   _subscribe = () => {
     Expo.Accelerometer.setUpdateInterval(16);
     this._subscription = Expo.Accelerometer.addListener(
-      ({ x }) => this.game && this.game.updateControls(x)
+      ({ x }) => this.game && this.game.updateControls(x),
     );
   };
 
@@ -26,15 +26,21 @@ export default class Controls extends React.Component {
 
   shouldComponentUpdate = () => false;
 
-  onTouchesBegan = () => this.game && this.game.onTouchesBegan();
-  onTouchesEnded = () => this.game && this.game.onTouchesEnded();
+  onTouchesBegan = ({ pageX: x, pageY: y }) =>
+    this.game && this.game.onTouchesBegan(x, y);
+  onTouchesMoved = ({ pageX: x, pageY: y }) =>
+    this.game && this.game.onTouchesMoved(x, y);
+  onTouchesEnded = ({ pageX: x, pageY: y }) =>
+    this.game && this.game.onTouchesEnded(x, y);
   render() {
     return (
       <MultiTouchView
         style={{ flex: 1 }}
         onTouchesBegan={this.onTouchesBegan}
         onTouchesEnded={this.onTouchesEnded}
-        onTouchesCancelled={this.onTouchesEnded}>
+        onTouchesMoved={this.onTouchesMoved}
+        onTouchesCancelled={this.onTouchesEnded}
+      >
         <Expo.GLView
           style={{ flex: 1 }}
           onContextCreate={context => (this.game = new Game({ context }))}
