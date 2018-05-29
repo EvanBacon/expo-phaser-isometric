@@ -93,7 +93,10 @@ class State {
     //   width: this.game.world.width,
     //   height: this.game.world.height,
     // };
-    this.cursor = { x: x * scale, y: y * scale };
+    this.cursor = {
+      x: x * scale, // * this.game.camera.scale.x,
+      y: y * scale,
+    };
   };
   onTouchesBegan = (x, y) => {
     this.pressing = true;
@@ -107,17 +110,11 @@ class State {
   onTouchesEnded = (x, y) => {
     this.setTouch(-1, -1);
     this.pressing = false;
-    if (this.player) {
-      if (this.player.alive) {
-        this.fireBullet();
-      } else {
-        this.restart();
-      }
-    }
   };
 
   create = () => {
     const { game } = this;
+    game.camera.follow(this.dude);
 
     this.groundGroup = this.game.add.group();
     this.objectGroup = this.game.add.group();
@@ -130,6 +127,8 @@ class State {
     this.easystar.setAcceptableTiles([1]);
     this.easystar.enableDiagonals();
     this.easystar.disableCornerCutting();
+    this.game.camera.scale.x = 2;
+    this.game.camera.scale.y = 2;
 
     // Generate ground
     for (let y = 0; y < Level.ground.length; y += 1) {
@@ -215,7 +214,17 @@ class State {
     // determined from the 2D pointer position without extra trickery.
     //
     // By default, the z position is 0 if not set.
-    this.game.iso.unproject(this.cursor, this.cursorPos);
+
+    const point = {
+      x: (this.cursor.x + this.game.camera.x) / this.game.camera.scale.x,
+      y: (this.cursor.y + this.game.camera.y) / this.game.camera.scale.y,
+    };
+    this.game.iso.unproject(
+      point,
+      this.cursorPos,
+      // this.game.camera.scale.x,
+      // 1 - this.game.camera.scale.x,
+    );
 
     if (this.ii % 5 == 0) {
       console.log(this.cursor, this.cursorPos.x, this.cursorPos.y);
@@ -235,7 +244,7 @@ class State {
       //   console.log('a', x, y);
       // }
       if (inBounds) {
-        console.log('in it');
+        // console.log('in it');
       }
 
       // Test to see if the 3D position from above intersects
