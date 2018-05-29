@@ -6,7 +6,7 @@ import Settings from '../Settings';
 
 const scale = PixelRatio.get();
 
-import EasyStar from 'easystarjs';
+// import EasyStar from 'easystarjs';
 import Level from '../game/map';
 import Dude from '../game/dude';
 
@@ -128,11 +128,11 @@ class State {
     this.objectGroup = this.game.add.group();
     this.water = [];
     this.cursorPos = new Phaser.Plugin.Isometric.Point3();
-    this.easystar = new EasyStar.js(); // eslint-disable-line new-cap
+    // this.easystar = new EasyStar.js(); // eslint-disable-line new-cap
     this.finding = false;
 
-    this.easystar.setGrid(Level.walkable);
-    this.easystar.setAcceptableTiles([1]);
+    // this.easystar.setGrid(Level.walkable);
+    // this.easystar.setAcceptableTiles([1]);
     // this.easystar.enableDiagonals();
     // this.easystar.disableCornerCutting();
 
@@ -220,9 +220,9 @@ class State {
      **/
     //  The scrolling starfield background
     // this.starfield = game.add.tileSprite(0, 0, this.width, this.height, 'starfield');
-    this.starfield = game.add.sprite(0, 0, 'starfield');
-    this.starfield.width = this.width;
-    this.starfield.height = this.height;
+    // this.starfield = game.add.sprite(0, 0, 'starfield');
+    // this.starfield.width = this.width;
+    // this.starfield.height = this.height;
     //  Our bullet group
     // this.bullets = game.add.group();
     // this.bullets.enableBody = true;
@@ -548,8 +548,8 @@ class State {
         // Start path finding
         this.finding = true;
         const dp = this.dudePosition();
-        this.easystar.findPath(dp.x, dp.y, x, y, this.processPath.bind(this));
-        this.easystar.calculate();
+        // this.easystar.findPath(dp.x, dp.y, x, y, this.processPath.bind(this));
+        // this.easystar.calculate();
       }
     });
 

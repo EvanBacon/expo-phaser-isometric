@@ -1,15 +1,15 @@
 import Expo from 'expo';
 import ExpoPhaser from 'expo-phaser';
-
-// import Playable from './states/Playable';
+import './phaser-plugin-isometric.js';
+import Playable from './states/Playable';
 
 export default class Game {
   constructor({ context }) {
     Expo.ScreenOrientation.allow(Expo.ScreenOrientation.Orientation.PORTRAIT);
-    // const game = ExpoPhaser.game({ context });
-    // this.playable = new Playable({ game, context });
-    // game.state.add('Playable', this.playable);
-    // game.state.start('Playable');
+    const game = ExpoPhaser.game({ context });
+    this.playable = new Playable({ game, context });
+    game.state.add('Playable', this.playable);
+    game.state.start('Playable');
   }
 
   updateControls = velocity =>
