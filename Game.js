@@ -12,6 +12,8 @@ export default class Game {
     game.state.start('Playable');
   }
 
+  onTransform = transform => this.playable.onTransform(transform);
+
   updateControls = velocity =>
     this.playable && this.playable.updateControls({ velocity });
   onTouchesBegan = (x, y) =>

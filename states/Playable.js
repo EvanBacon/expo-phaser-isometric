@@ -112,9 +112,53 @@ class State {
     this.pressing = false;
   };
 
+  onTransform = ({ x, y, scale }) => {
+    if (x) {
+      this.game.camera.x = -x;
+    }
+    if (y) {
+      console.log({ y });
+
+      this.game.camera.y = -y;
+    }
+    if (scale) {
+      this.cameraZoom = scale;
+    }
+  };
+
+  cameraClamp = { min: 0.75, max: 7.5 };
+
+  set cameraZoom(value) {
+    var center = Phaser.Point.add(
+      this.game.camera.position,
+      new Phaser.Point(
+        this.game.camera.view.halfWidth,
+        this.game.camera.view.halfHeight,
+      ),
+    );
+
+    var oldCameraScale = this.game.camera.scale.clone();
+
+    const clampedValue = Math.min(
+      this.cameraClamp.max,
+      Math.max(this.cameraClamp.min, value),
+    );
+    this.game.camera.scale.set(clampedValue);
+
+    var cameraScaleRatio = Phaser.Point.divide(
+      this.game.camera.scale,
+      oldCameraScale,
+    );
+
+    this.game.camera.focusOn(Phaser.Point.multiply(center, cameraScaleRatio));
+  }
+  get cameraZoom() {
+    return this.game.camera.scale.x;
+  }
+
   create = () => {
     const { game } = this;
-    game.camera.follow(this.dude);
+    // game.camera.follow(this.dude);
 
     this.groundGroup = this.game.add.group();
     this.objectGroup = this.game.add.group();
@@ -127,8 +171,8 @@ class State {
     this.easystar.setAcceptableTiles([1]);
     this.easystar.enableDiagonals();
     this.easystar.disableCornerCutting();
-    this.game.camera.scale.x = 2;
-    this.game.camera.scale.y = 2;
+    // this.game.camera.scale.x = 4;
+    // this.game.camera.scale.y = this.game.camera.scale.x;
 
     // Generate ground
     for (let y = 0; y < Level.ground.length; y += 1) {
@@ -199,9 +243,9 @@ class State {
     // Create dude
     this.dude = new Dude(this.game, State.startPosition);
     this.objectGroup.add(this.dude.sprite);
-    this.game.camera.follow(this.dude.sprite);
+    // this.game.camera.follow(this.dude.sprite);
 
-    // game.stage.backgroundColor = '#4488AA';
+    game.stage.backgroundColor = '#ADD3FF';
     // game.physics.startSystem(Phaser.Physics.ARCADE);
   };
 
@@ -227,7 +271,7 @@ class State {
     );
 
     if (this.ii % 5 == 0) {
-      console.log(this.cursor, this.cursorPos.x, this.cursorPos.y);
+      // console.log(this.cursor, this.cursorPos.x, this.cursorPos.y);
     }
 
     this.ii += 1;

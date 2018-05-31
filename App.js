@@ -4,7 +4,7 @@ import React from 'react';
 import { View } from 'react-native';
 import Assets from './Assets';
 import Controls from './Controls';
-
+import GestureView from './GestureView';
 class App extends React.Component {
   state = {
     loading: true,
